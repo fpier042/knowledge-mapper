@@ -1,39 +1,41 @@
-import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
 import dotenv from "dotenv";
+import Bookmark from "../models/Bookmark.js";
 
 // Load environment variables
 dotenv.config();
 
 async function run() {
   try {
-    await client.connect();
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log("Connected to MongoDB");
 
-    const database = client.db("knowledge-mapper");
-    const collection = database.collection("bookmarks");
-
-    // Define Atlas Search index
-    const index = {
-      name: "bookmarkSearch",
-      definition: {
-        mappings: {
-          dynamic: true,
-          fields: {
-            title: { type: "string", analyzer: "lucene.standard" },
-            description: { type: "string", analyzer: "lucene.standard" },
-            tags: { type: "string", analyzer: "lucene.standard" },
-          },
+    // Create the Atlas Search index if it doesn't exist
+    const indexExists = await Bookmark.collection.indexExists("bookmarkSearch");
+    if (!indexExists) {
+      await Bookmark.collection.createIndex(
+        {
+          title: "text",
+          description: "text",
+          tags: "text",
         },
-      },
-    };
-
-    // Create search index
-    const result = await collection.createSearchIndex(index);
-    console.log("Search index created:", result);
+        {
+          weights: {
+            title: 3,
+            tags: 2,
+            description: 1,
+          },
+          name: "bookmarkSearch",
+        }
+      );
+      console.log("Atlas Search index created");
+    } else {
+      console.log("Atlas Search index already exists");
+    }
   } catch (error) {
-    console.error("Error creating search index:", error);
+    console.error("Error creating Atlas Search index:", error);
   } finally {
-    await client.close();
+    await mongoose.disconnect();
   }
 }
 

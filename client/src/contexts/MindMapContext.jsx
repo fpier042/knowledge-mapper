@@ -1,7 +1,7 @@
 import { createContext, useReducer } from "react";
 import { ReactFlowProvider } from "reactflow";
 
-const MindMapContext = createContext();
+export const MindMapContext = createContext(); // Added export
 
 const initialState = {
   nodes: [],

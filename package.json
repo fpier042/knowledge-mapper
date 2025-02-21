@@ -1,6 +1,24 @@
 {
-  "dependencies": {
-    "mongodb": "^6.13.0"
+  "name": "knowledge-mapper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type": "module"
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^6.13.0",
+    "@tailwindcss/postcss": "^2.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^8.2.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.0.7",
+    "vite": "^4.0.0"
+  }
 }

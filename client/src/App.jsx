@@ -1,14 +1,20 @@
-import { useCallback } from "react";
-import ReactFlow, { addEdge, useNodesState, useEdgesState } from "reactflow";
-import "reactflow/dist/style.css"; // Corrected import
+import { useCallback } from 'react';
+import ReactFlow, { 
+  addEdge, 
+  useNodesState, 
+  useEdgesState,
+  Connection,
+  Edge 
+} from 'reactflow';
+import 'reactflow/dist/style.css';
 
 function App() {
   const initialNodes = [
-    { id: "1", position: { x: 0, y: 0 }, data: { label: "Start Here!" } },
+    { id: '1', position: { x: 0, y: 0 }, data: { label: 'Start Here!' } },
   ];
   const initialEdges = [];
 
-  const [nodes, , onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const onConnect = useCallback(
@@ -17,7 +23,7 @@ function App() {
   );
 
   return (
-    <div style={{ width: "100vw", height: "100vh" }}>
+    <div style={{ width: '100vw', height: '100vh' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -30,4 +36,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

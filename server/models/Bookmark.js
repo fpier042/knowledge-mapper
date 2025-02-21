@@ -32,10 +32,13 @@ const bookmarkSchema = new mongoose.Schema(
         trim: true,
       },
     ],
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+    userId: {
+      type: String,
       required: true,
+    },
+    favicon: {
+      type: String,
+      required: false,
     },
   },
   {
