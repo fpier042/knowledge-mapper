@@ -4,16 +4,7 @@ import dotenv from "dotenv";
 // Load environment variables
 dotenv.config();
 
-// Verify connection string
-if (!process.env.MONGODB_URI) {
-  throw new Error("MONGODB_URI is not defined in .env");
-}
-
-const uri = process.env.MONGODB_URI;
-
 async function run() {
-  const client = new MongoClient(uri);
-
   try {
     await client.connect();
     console.log("Connected to MongoDB");
